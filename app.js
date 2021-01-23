@@ -6,26 +6,41 @@ const shortURL = require("./models/url")
 mongoose.connect("mongodb://localhost:27017/shotsDB",{useNewUrlParser:true})
 
 const app = express()
-
+let record = " " ;
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({urlencoded:true}));
 
-app.get("/", async (req,res)=>  {
+app.get("/",  (req,res)=>  {
     
-    const allData = await shortURL.find({}, { _id:0 })
+    const allData =  shortURL.find({},{_id:0})
 
+    // const ifdata = {
+    //     full:" ",
+    //     short:" ",
+    //     clicks:00  
+    // }
 
-    res.render("index",{shortUrls:allData})
+    // if(record==" "){
+    //     res.render("index",{shortUrls: ifdata})
+    // }
+    
+    console.log(allData)
+    res.render("index",{shortUrls: allData})
+    
 
 })
+
+
 
 app.post("/short", async (req,res)=>{
 
     const url = req.body.fullUrl
 
-   const record = new shortURL({
-       full : url
-   })
+     record = new shortURL({
+        full : url
+    })
+
+   
    await record.save()
     res.redirect("/")
 
