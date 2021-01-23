@@ -2,6 +2,7 @@ const express = require("express")
 const ejs = require("ejs")
 const mongoose = require('mongoose')
 const shortURL = require("./models/url")
+
 mongoose.connect("mongodb://localhost:27017/shotsDB",{useNewUrlParser:true})
 
 const app = express()
